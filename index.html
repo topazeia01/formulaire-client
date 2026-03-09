@@ -981,4 +981,951 @@
   }
 </script>
 </body>
+</html>  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .section-header { background: linear-gradient(135deg, var(--vert-pale), var(--blanc)); padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .section-header .dot { width: 8px; height: 8px; background: var(--vert); border-radius: 50%; }
+  .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; letter-spacing: 0.02em; }
+  .section-body { padding: 24px; }
+
+  /* FIELDS */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .field-row.full { grid-template-columns: 1fr; }
+  .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 11px; font-weight: 500; color: var(--vert-fonce); text-transform: uppercase; letter-spacing: 0.06em; }
+  .field input, .field select, .field textarea { border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--gris); background: var(--blanc); transition: border-color 0.2s; outline: none; width: 100%; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--vert); box-shadow: 0 0 0 3px rgba(107,158,159,0.12); }
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  /* CHAMP AUTRE - caché par défaut */
+  .autre-field { display: none; margin-top: 8px; }
+  .autre-field.visible { display: block; }
+  .autre-field input { border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--gris); width: 100%; outline: none; }
+  .autre-field input:focus { border-color: var(--vert); }
+
+  /* SOUS-SECTION DYNAMIQUE (changement véhicule avenant) */
+  .sub-section { display: none; background: var(--vert-pale); border-radius: 10px; padding: 18px; margin-top: 16px; border: 1.5px solid var(--vert); }
+  .sub-section.visible { display: block; }
+  .sub-section-title { font-size: 12px; font-weight: 600; color: var(--vert-fonce); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+
+  /* DÉCLARATIONS */
+  .decl-list { display: flex; flex-direction: column; gap: 10px; }
+  .decl-item { background: var(--gris-clair); border-radius: 10px; border: 1.5px solid transparent; transition: all 0.2s; overflow: hidden; }
+  .decl-item.actif { border-color: var(--vert); background: #F0FAF0; }
+  .decl-main { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; gap: 12px; }
+  .decl-label { font-size: 13px; flex: 1; }
+  .toggle-group { display: flex; gap: 6px; flex-shrink: 0; }
+  .toggle-btn { padding: 5px 14px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--blanc); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+  .toggle-btn.oui.active { background: #D4EDDA; border-color: #5CB87A; color: #2D6A4F; }
+  .toggle-btn.non.active { background: #F8D7DA; border-color: #E07070; color: #7B2D2D; }
+
+  /* ZONE DÉTAIL DÉCLARATION - s'ouvre sur OUI */
+  .decl-detail { display: none; padding: 14px 16px; border-top: 1px dashed var(--border); background: rgba(255,255,255,0.7); }
+  .decl-detail.visible { display: block; }
+  .decl-detail-label { font-size: 11px; font-weight: 500; color: var(--vert-fonce); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; margin-top: 10px; display: block; }
+  .decl-detail-label:first-child { margin-top: 0; }
+  .decl-detail input[type="date"], .decl-detail textarea { border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--gris); background: var(--blanc); width: 100%; outline: none; transition: border-color 0.2s; }
+  .decl-detail input[type="date"]:focus, .decl-detail textarea:focus { border-color: var(--vert); }
+  .decl-detail textarea { min-height: 64px; resize: vertical; }
+
+  /* CONSENTEMENT */
+  .consent-box { background: linear-gradient(135deg, #EAF3F3, #F0F7F7); border: 1.5px solid var(--vert); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+  .consent-box p { font-size: 13px; line-height: 1.6; margin-bottom: 14px; }
+  .consent-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+  .consent-check input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--vert); flex-shrink: 0; margin-top: 2px; }
+  .consent-check span { font-size: 13px; font-weight: 500; }
+  .submit-area { text-align: center; margin-top: 32px; }
+  .submit-btn { background: var(--vert); color: var(--blanc); border: none; border-radius: 12px; padding: 16px 48px; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+  .submit-btn:hover { background: var(--vert-fonce); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(107,158,159,0.35); }
+  .submit-note { font-size: 12px; color: #999; margin-top: 12px; }
+
+  /* SUCCESS */
+  .success { display: none; text-align: center; padding: 60px 40px; background: var(--blanc); border-radius: 16px; border: 1px solid var(--border); }
+  .success .checkmark { font-size: 56px; margin-bottom: 20px; }
+  .success h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--vert-fonce); margin-bottom: 12px; }
+  .success p { font-size: 15px; color: #666; line-height: 1.6; }
+
+  .form-section { display: none; }
+  .form-section.visible { display: block; }
+  .form-footer { text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .form-footer p { font-size: 11px; color: #bbb; letter-spacing: 0.04em; }
+
+  @media (max-width: 600px) {
+    .type-selector { grid-template-columns: 1fr; }
+    .field-row, .field-row.three { grid-template-columns: 1fr; }
+    .header { padding: 18px 20px; }
+    .container { padding: 24px 16px 60px; }
+    .decl-main { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <svg class="logo-triangle" viewBox="0 0 80 80" fill="none">
+    <polygon points="40,8 72,65 8,65" stroke="#6B9E9F" stroke-width="3.5" fill="none"/>
+    <polygon points="40,20 63,58 17,58" stroke="#4A7C7D" stroke-width="2.5" fill="none"/>
+    <line x1="16" y1="65" x2="64" y2="65" stroke="#3A3A3A" stroke-width="3"/>
+  </svg>
+  <div class="header-text">
+    <h1>TOPAZE ASSURANCES</h1>
+    <p>Formulaire client sécurisé</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="type-selector">
+    <button class="type-btn active" onclick="setType('auto')" id="btn-auto">
+      <div class="icon">🚗</div><span class="label">Nouvelle affaire</span><span class="sublabel">Automobile</span>
+    </button>
+    <button class="type-btn" onclick="setType('hab')" id="btn-hab">
+      <div class="icon">🏠</div><span class="label">Nouvelle affaire</span><span class="sublabel">Habitation</span>
+    </button>
+    <button class="type-btn" onclick="setType('avenant')" id="btn-avenant">
+      <div class="icon">✏️</div><span class="label">Avenant</span><span class="sublabel">Modification</span>
+    </button>
+  </div>
+
+  <div class="success" id="success">
+    <div class="checkmark">✅</div>
+    <h2>Formulaire soumis avec succès</h2>
+    <p>Merci ! Votre courtier Topaze Assurances a bien reçu vos informations.<br>Vous serez contacté sous peu pour finaliser votre dossier.</p>
+  </div>
+
+  <!-- ==================== AUTO ==================== -->
+  <div class="form-section visible" id="form-auto">
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Informations personnelles</h2></div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field"><label>Prénom *</label><input type="text" id="auto-prenom"></div>
+          <div class="field"><label>Nom *</label><input type="text" id="auto-nom"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Date de naissance *</label><input type="date" id="auto-ddn"></div>
+          <div class="field"><label>Téléphone</label><input type="tel" id="auto-tel"></div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>Courriel *</label><input type="email" id="auto-email"></div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>Adresse complète *</label><input type="text" id="auto-adresse"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Occupation / Emploi</label><input type="text" id="auto-emploi"></div>
+          <div class="field"><label>Employeur</label><input type="text" id="auto-employeur"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Assurance actuelle</h2></div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Assureur actuel</label>
+            <select id="auto-assureur-ant" onchange="toggleAutre(this,'auto-assureur-autre')">
+              <option value="">Sélectionner...</option>
+              <option>Aviva</option><option>Intact</option><option>L'Unique</option>
+              <option>Definity (Economical)</option><option>Wawanesa</option>
+              <option>Pafco</option><option>Échelon</option>
+              <option>April Marine</option><option>Assurance Universelle</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div class="autre-field" id="auto-assureur-autre"><input type="text" placeholder="Préciser l'assureur..."></div>
+          </div>
+          <div class="field"><label>Numéro de police</label><input type="text" id="auto-police-ant"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Date d'expiration</label><input type="date" id="auto-exp"></div>
+          <div class="field"><label>Date d'effet souhaitée *</label><input type="date" id="auto-date-eff"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Véhicule à assurer</h2></div>
+      <div class="section-body">
+        <div class="field-row three">
+          <div class="field"><label>Année *</label><input type="number" id="auto-veh-annee" min="1990" max="2030"></div>
+          <div class="field"><label>Marque *</label><input type="text" id="auto-veh-marque"></div>
+          <div class="field"><label>Modèle *</label><input type="text" id="auto-veh-modele"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Numéro de plaque</label><input type="text" id="auto-plaque"></div>
+          <div class="field"><label>NIP (VIN)</label><input type="text" id="auto-vin"></div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Titulaire du véhicule *</label>
+            <select id="auto-titulaire" onchange="toggleAutre(this,'auto-titulaire-autre')">
+              <option value="">Sélectionner...</option>
+              <option>Moi-même</option><option>Conjoint(e)</option><option>Entreprise</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div class="autre-field" id="auto-titulaire-autre"><input type="text" placeholder="Préciser le titulaire..."></div>
+          </div>
+          <div class="field">
+            <label>Type de financement</label>
+            <select id="auto-financement" onchange="toggleFinancement(this)">
+              <option value="Aucun">Aucun — payé comptant</option>
+              <option value="23A">Prêt auto (23A)</option>
+              <option value="Bail">Bail / Leasing</option>
+            </select>
+          </div>
+        </div>
+        <div id="auto-financement-detail" style="display:none">
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field"><label>Adresse du créancier</label><input type="text" id="auto-adresse-creancier"></div>
+            <div class="field">
+              <label>Taux d'intérêt</label>
+              <select id="auto-taux">
+                <option value="Standard">Standard</option>
+                <option value="Élevé">Élevé</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Véhicule modifié ?</label>
+            <select id="auto-modifie">
+              <option value="Non">Non</option>
+              <option value="Oui">Oui — préciser dans les notes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Usage hors Québec</label>
+            <select id="auto-hors-qc">
+              <option value="">Sélectionner...</option>
+              <option>Moins de 30 jours/an</option>
+              <option>30 à 90 jours/an</option>
+              <option>Plus de 90 jours/an</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Protections souhaitées</label><input type="text" id="auto-protections"></div>
+          <div class="field">
+            <label>Valeur à neuf ?</label>
+            <select id="auto-valeur-neuf">
+              <option value="Non">Non</option>
+              <option value="Oui">Oui</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Déclarations obligatoires</h2></div>
+      <div class="section-body">
+        <div class="decl-list">
+
+          <div class="decl-item" id="di-credit">
+            <div class="decl-main">
+              <span class="decl-label">Consentement à la vérification de crédit</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('credit','Oui','di-credit','dd-credit')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('credit','Non','di-credit','dd-credit')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="dd-credit">
+              <span class="decl-detail-label">Date du consentement</span>
+              <input type="date">
+              <span class="decl-detail-label">Précisions</span>
+              <textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="di-fcsa">
+            <div class="decl-main">
+              <span class="decl-label">Aucun sinistre non déclaré (FCSA)</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('fcsa','Oui','di-fcsa','dd-fcsa')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('fcsa','Non','di-fcsa','dd-fcsa')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="dd-fcsa">
+              <span class="decl-detail-label">Date du sinistre</span>
+              <input type="date">
+              <span class="decl-detail-label">Description (nature, circonstances, montant approximatif)</span>
+              <textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="di-faillite">
+            <div class="decl-main">
+              <span class="decl-label">Aucune faillite dans les 5 dernières années</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('faillite','Oui','di-faillite','dd-faillite')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('faillite','Non','di-faillite','dd-faillite')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="dd-faillite">
+              <span class="decl-detail-label">Date de la faillite</span>
+              <input type="date">
+              <span class="decl-detail-label">Précisions (type, statut actuel)</span>
+              <textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="di-annule">
+            <div class="decl-main">
+              <span class="decl-label">Aucune police annulée ou refusée</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('annule','Oui','di-annule','dd-annule')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('annule','Non','di-annule','dd-annule')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="dd-annule">
+              <span class="decl-detail-label">Date de l'annulation / refus</span>
+              <input type="date">
+              <span class="decl-detail-label">Description (assureur concerné, raison invoquée)</span>
+              <textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="di-criminel">
+            <div class="decl-main">
+              <span class="decl-label">Aucun dossier criminel lié à la conduite</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('criminel','Oui','di-criminel','dd-criminel')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('criminel','Non','di-criminel','dd-criminel')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="dd-criminel">
+              <span class="decl-detail-label">Date de l'infraction</span>
+              <input type="date">
+              <span class="decl-detail-label">Description (nature de l'infraction, statut actuel)</span>
+              <textarea></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Notes ou informations supplémentaires</h2></div>
+      <div class="section-body">
+        <div class="field-row full"><div class="field"><textarea id="auto-notes"></textarea></div></div>
+      </div>
+    </div>
+
+  </div><!-- /auto -->
+
+  <!-- ==================== HABITATION ==================== -->
+  <div class="form-section" id="form-hab">
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Informations personnelles</h2></div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field"><label>Prénom *</label><input type="text" id="hab-prenom"></div>
+          <div class="field"><label>Nom *</label><input type="text" id="hab-nom"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Date de naissance *</label><input type="date"></div>
+          <div class="field"><label>Téléphone</label><input type="tel"></div>
+        </div>
+        <div class="field-row full">
+          <div class="field"><label>Courriel *</label><input type="email"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Propriété à assurer</h2></div>
+      <div class="section-body">
+        <div class="field-row full">
+          <div class="field"><label>Adresse de la propriété *</label><input type="text"></div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Type de bâtiment *</label>
+            <select onchange="toggleAutre(this,'hab-type-autre')">
+              <option value="">Sélectionner...</option>
+              <option>Maison unifamiliale</option><option>Copropriété (condo)</option>
+              <option>Duplex / Triplex</option><option>Appartement locataire</option>
+              <option>Chalet / Résidence secondaire</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div class="autre-field" id="hab-type-autre"><input type="text" placeholder="Préciser le type..."></div>
+          </div>
+          <div class="field">
+            <label>Statut *</label>
+            <select>
+              <option value="">Sélectionner...</option>
+              <option>Propriétaire</option><option>Locataire</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row three">
+          <div class="field"><label>Année de construction</label><input type="number" min="1800" max="2026"></div>
+          <div class="field"><label>Superficie (pi²)</label><input type="number"></div>
+          <div class="field"><label>Nb de logements</label><input type="number" min="1"></div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Type de toiture</label>
+            <select>
+              <option value="">Sélectionner...</option>
+              <option>Asphalte (moins de 15 ans)</option><option>Asphalte (15 à 25 ans)</option>
+              <option>Asphalte (plus de 25 ans)</option><option>Métal</option><option>Membrane élastomère</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Type de chauffage principal</label>
+            <select onchange="toggleAutre(this,'hab-chauffage-autre')">
+              <option value="">Sélectionner...</option>
+              <option>Électrique</option><option>Gaz naturel</option>
+              <option>Mazout</option><option>Thermopompe</option><option>Bois / Foyer</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div class="autre-field" id="hab-chauffage-autre"><input type="text" placeholder="Préciser le chauffage..."></div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Valeur estimée du bâtiment ($)</label><input type="number"></div>
+          <div class="field"><label>Valeur du contenu ($)</label><input type="number"></div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Piscine ?</label>
+            <select>
+              <option value="Non">Non</option>
+              <option value="Creusée">Oui — creusée</option>
+              <option value="Hors-terre">Oui — hors-terre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Système d'alarme ?</label>
+            <select>
+              <option value="Non">Non</option>
+              <option value="Local">Oui — local seulement</option>
+              <option value="Central">Oui — relié à une centrale</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Assurance actuelle</h2></div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Assureur actuel</label>
+            <select onchange="toggleAutre(this,'hab-assureur-autre')">
+              <option value="">Sélectionner...</option>
+              <option>Aviva</option><option>Intact</option><option>L'Unique</option>
+              <option>Definity (Economical)</option><option>Wawanesa</option>
+              <option>Pafco</option><option>Échelon</option>
+              <option>April Marine</option><option>Assurance Universelle</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div class="autre-field" id="hab-assureur-autre"><input type="text" placeholder="Préciser l'assureur..."></div>
+          </div>
+          <div class="field"><label>Numéro de police</label><input type="text"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Date d'expiration</label><input type="date"></div>
+          <div class="field"><label>Date d'effet souhaitée *</label><input type="date"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Déclarations obligatoires</h2></div>
+      <div class="section-body">
+        <div class="decl-list">
+
+          <div class="decl-item" id="hdi-credit">
+            <div class="decl-main">
+              <span class="decl-label">Consentement à la vérification de crédit</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('hcredit','Oui','hdi-credit','hdd-credit')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('hcredit','Non','hdi-credit','hdd-credit')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="hdd-credit">
+              <span class="decl-detail-label">Date</span><input type="date">
+              <span class="decl-detail-label">Précisions</span><textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="hdi-fcsa">
+            <div class="decl-main">
+              <span class="decl-label">Aucun sinistre non déclaré</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('hfcsa','Oui','hdi-fcsa','hdd-fcsa')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('hfcsa','Non','hdi-fcsa','hdd-fcsa')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="hdd-fcsa">
+              <span class="decl-detail-label">Date du sinistre</span><input type="date">
+              <span class="decl-detail-label">Description</span><textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="hdi-faillite">
+            <div class="decl-main">
+              <span class="decl-label">Aucune faillite dans les 5 dernières années</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('hfaillite','Oui','hdi-faillite','hdd-faillite')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('hfaillite','Non','hdi-faillite','hdd-faillite')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="hdd-faillite">
+              <span class="decl-detail-label">Date de la faillite</span><input type="date">
+              <span class="decl-detail-label">Précisions</span><textarea></textarea>
+            </div>
+          </div>
+
+          <div class="decl-item" id="hdi-annule">
+            <div class="decl-main">
+              <span class="decl-label">Aucune police annulée ou refusée</span>
+              <div class="toggle-group">
+                <button class="toggle-btn oui" onclick="setDecl('hannule','Oui','hdi-annule','hdd-annule')">Oui</button>
+                <button class="toggle-btn non active" onclick="setDecl('hannule','Non','hdi-annule','hdd-annule')">Non</button>
+              </div>
+            </div>
+            <div class="decl-detail" id="hdd-annule">
+              <span class="decl-detail-label">Date de l'annulation / refus</span><input type="date">
+              <span class="decl-detail-label">Description</span><textarea></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Notes ou informations supplémentaires</h2></div>
+      <div class="section-body">
+        <div class="field-row full"><div class="field"><textarea></textarea></div></div>
+      </div>
+    </div>
+
+  </div><!-- /hab -->
+
+  <!-- ==================== AVENANT ==================== -->
+  <div class="form-section" id="form-avenant">
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Identification du dossier</h2></div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field"><label>Prénom *</label><input type="text"></div>
+          <div class="field"><label>Nom *</label><input type="text"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Numéro de police *</label><input type="text"></div>
+          <div class="field">
+            <label>Assureur</label>
+            <select onchange="toggleAutre(this,'av-assureur-autre')">
+              <option value="">Sélectionner...</option>
+              <option>Aviva</option><option>Intact</option><option>L'Unique</option>
+              <option>Definity (Economical)</option><option>Wawanesa</option>
+              <option>Pafco</option><option>Échelon</option>
+              <option>April Marine</option><option>Assurance Universelle</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <div class="autre-field" id="av-assureur-autre"><input type="text" placeholder="Préciser l'assureur..."></div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Téléphone</label><input type="tel"></div>
+          <div class="field"><label>Courriel *</label><input type="email"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Nature de la modification</h2></div>
+      <div class="section-body">
+        <div class="field-row full">
+          <div class="field">
+            <label>Type de changement *</label>
+            <select id="av-type-select" onchange="handleAvenantType(this)">
+              <option value="">Sélectionner...</option>
+              <optgroup label="🚗 Auto">
+                <option value="veh">Changement de véhicule</option>
+                <option value="ajout-conducteur">Ajout d'un conducteur</option>
+                <option value="retrait-conducteur">Retrait d'un conducteur</option>
+                <option value="adresse">Changement d'adresse</option>
+                <option value="protections">Modification des protections</option>
+                <option value="financement">Changement de financement</option>
+              </optgroup>
+              <optgroup label="🏠 Habitation">
+                <option value="adresse-hab">Changement d'adresse</option>
+                <option value="renovation">Ajout d'une annexe / rénovation</option>
+                <option value="locataires">Changement de locataires</option>
+                <option value="garanties">Modification des garanties</option>
+                <option value="bien-valeur">Ajout d'un bien de valeur</option>
+              </optgroup>
+              <optgroup label="Autre">
+                <option value="coordonnees">Changement de coordonnées</option>
+                <option value="mode-paiem">Changement de mode de paiement</option>
+                <option value="autre-mod">Autre modification</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row full">
+          <div class="field"><label>Date d'effet de la modification *</label><input type="date"></div>
+        </div>
+
+        <!-- SOUS-SECTION : Changement de véhicule -->
+        <div class="sub-section" id="av-veh-section">
+          <div class="sub-section-title">🚗 Informations du nouveau véhicule</div>
+          <div class="field-row three" style="margin-bottom:16px">
+            <div class="field"><label>Année *</label><input type="number" min="1990" max="2030"></div>
+            <div class="field"><label>Marque *</label><input type="text"></div>
+            <div class="field"><label>Modèle *</label><input type="text"></div>
+          </div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field"><label>Numéro de plaque</label><input type="text"></div>
+            <div class="field"><label>NIP (VIN)</label><input type="text"></div>
+          </div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field">
+              <label>Titulaire du véhicule</label>
+              <select onchange="toggleAutre(this,'av-veh-titulaire-autre')">
+                <option value="">Sélectionner...</option>
+                <option>Moi-même</option><option>Conjoint(e)</option><option>Entreprise</option>
+                <option value="Autre">Autre</option>
+              </select>
+              <div class="autre-field" id="av-veh-titulaire-autre"><input type="text" placeholder="Préciser le titulaire..."></div>
+            </div>
+            <div class="field">
+              <label>Type de financement</label>
+              <select onchange="toggleFinancementAv(this)">
+                <option value="Aucun">Aucun — payé comptant</option>
+                <option value="23A">Prêt auto (23A)</option>
+                <option value="Bail">Bail / Leasing</option>
+              </select>
+            </div>
+          </div>
+          <div id="av-veh-financement-detail" style="display:none; margin-bottom:16px">
+            <div class="field-row">
+              <div class="field"><label>Adresse du créancier</label><input type="text"></div>
+              <div class="field">
+                <label>Taux d'intérêt</label>
+                <select><option>Standard</option><option>Élevé</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field">
+              <label>Véhicule modifié ?</label>
+              <select><option value="Non">Non</option><option value="Oui">Oui — préciser dans les notes</option></select>
+            </div>
+            <div class="field">
+              <label>Usage hors Québec</label>
+              <select>
+                <option value="">Sélectionner...</option>
+                <option>Moins de 30 jours/an</option>
+                <option>30 à 90 jours/an</option>
+                <option>Plus de 90 jours/an</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Protections souhaitées</label><input type="text"></div>
+            <div class="field">
+              <label>Valeur à neuf ?</label>
+              <select><option value="Non">Non</option><option value="Oui">Oui</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Ajout conducteur -->
+        <div class="sub-section" id="av-conducteur-section">
+          <div class="sub-section-title">👤 Informations du conducteur</div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field"><label>Prénom</label><input type="text"></div>
+            <div class="field"><label>Nom</label><input type="text"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Date de naissance</label><input type="date"></div>
+            <div class="field"><label>Numéro de permis</label><input type="text"></div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Adresse -->
+        <div class="sub-section" id="av-adresse-section">
+          <div class="sub-section-title">📍 Nouvelle adresse</div>
+          <div class="field-row full" style="margin-bottom:0">
+            <div class="field"><label>Nouvelle adresse complète</label><input type="text"></div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Protections / Garanties -->
+        <div class="sub-section" id="av-protections-section">
+          <div class="sub-section-title">🛡️ Modification des protections</div>
+          <div class="field-row full" style="margin-bottom:0">
+            <div class="field"><label>Détail des changements souhaités</label><textarea></textarea></div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Financement -->
+        <div class="sub-section" id="av-financement-section">
+          <div class="sub-section-title">💳 Nouveau financement</div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field">
+              <label>Type de financement</label>
+              <select><option value="Aucun">Aucun</option><option value="23A">Prêt auto (23A)</option><option value="Bail">Bail</option></select>
+            </div>
+            <div class="field"><label>Adresse du créancier</label><input type="text"></div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Bien de valeur -->
+        <div class="sub-section" id="av-bien-section">
+          <div class="sub-section-title">💎 Bien de valeur à déclarer</div>
+          <div class="field-row" style="margin-bottom:16px">
+            <div class="field"><label>Description du bien</label><input type="text"></div>
+            <div class="field"><label>Valeur estimée ($)</label><input type="number"></div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Mode de paiement -->
+        <div class="sub-section" id="av-paiem-section">
+          <div class="sub-section-title">💰 Nouveau mode de paiement</div>
+          <div class="field-row" style="margin-bottom:0">
+            <div class="field">
+              <label>Mode souhaité</label>
+              <select><option value="12">Mensuel — 12 paiements</option><option value="2">Semestriel</option><option value="1">Annuel</option></select>
+            </div>
+            <div class="field"><label>Nom(s) sur le compte</label><input type="text"></div>
+          </div>
+        </div>
+
+        <!-- SOUS-SECTION : Autre modification -->
+        <div class="sub-section" id="av-autre-section">
+          <div class="sub-section-title">📝 Description de la modification</div>
+          <div class="field-row full" style="margin-bottom:0">
+            <div class="field"><textarea placeholder="Décrivez en détail la modification souhaitée..."></textarea></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="dot"></div><h2>Notes supplémentaires</h2></div>
+      <div class="section-body">
+        <div class="field-row full"><div class="field"><textarea></textarea></div></div>
+      </div>
+    </div>
+
+  </div><!-- /avenant -->
+
+  <!-- CONSENTEMENT -->
+  <div id="consent-submit">
+    <div class="consent-box">
+      <p>En soumettant ce formulaire, vous autorisez Topaze Assurances à utiliser les informations fournies dans le but exclusif de vous offrir des services d'assurance. Vos données sont traitées de façon confidentielle conformément à la Loi sur la protection des renseignements personnels.</p>
+      <label class="consent-check">
+        <input type="checkbox" id="consent-cb">
+        <span>Je confirme que les informations fournies sont exactes et j'autorise Topaze Assurances à les utiliser pour préparer mon dossier.</span>
+      </label>
+    </div>
+    <div class="submit-area">
+      <button class="submit-btn" onclick="soumettre()"><span>Soumettre mon formulaire</span><span>→</span></button>
+      <p class="submit-note">🔒 Vos informations sont sécurisées et confidentielles</p>
+    </div>
+  </div>
+
+  <div class="form-footer"><p>© TOPAZE ASSURANCES — Confidentiel — Tous droits réservés</p></div>
+
+</div><!-- /container -->
+
+<script>
+  let typeActif = 'auto';
+
+  function setType(t) {
+    typeActif = t;
+    ['auto','hab','avenant'].forEach(x => {
+      document.getElementById('btn-'+x).classList.remove('active');
+      document.getElementById('form-'+x).classList.remove('visible');
+    });
+    document.getElementById('btn-'+t).classList.add('active');
+    document.getElementById('form-'+t).classList.add('visible');
+  }
+
+  // Déclarations — Non par défaut, Oui ouvre la zone de détail
+  function setDecl(key, val, itemId, detailId) {
+    const item = document.getElementById(itemId);
+    const detail = document.getElementById(detailId);
+    item.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    const btn = val === 'Oui' ? item.querySelector('.oui') : item.querySelector('.non');
+    if (btn) btn.classList.add('active');
+    if (val === 'Oui') {
+      item.classList.add('actif');
+      if (detail) detail.classList.add('visible');
+    } else {
+      item.classList.remove('actif');
+      if (detail) detail.classList.remove('visible');
+    }
+  }
+
+  // Champ "Autre" — affiche un input texte
+  function toggleAutre(select, autreDivId) {
+    const div = document.getElementById(autreDivId);
+    if (!div) return;
+    if (select.value === 'Autre') div.classList.add('visible');
+    else div.classList.remove('visible');
+  }
+
+  // Financement AUTO — affiche adresse créancier
+  function toggleFinancement(select) {
+    const div = document.getElementById('auto-financement-detail');
+    if (!div) return;
+    div.style.display = (select.value !== 'Aucun') ? 'block' : 'none';
+  }
+
+  function toggleFinancementAv(select) {
+    const div = document.getElementById('av-veh-financement-detail');
+    if (!div) return;
+    div.style.display = (select.value !== 'Aucun') ? 'block' : 'none';
+  }
+
+  // AVENANT — affiche la bonne sous-section selon le type choisi
+  const avSections = {
+    'veh': 'av-veh-section',
+    'ajout-conducteur': 'av-conducteur-section',
+    'retrait-conducteur': 'av-conducteur-section',
+    'adresse': 'av-adresse-section',
+    'adresse-hab': 'av-adresse-section',
+    'protections': 'av-protections-section',
+    'garanties': 'av-protections-section',
+    'financement': 'av-financement-section',
+    'renovation': 'av-autre-section',
+    'locataires': 'av-autre-section',
+    'bien-valeur': 'av-bien-section',
+    'coordonnees': 'av-adresse-section',
+    'mode-paiem': 'av-paiem-section',
+    'autre-mod': 'av-autre-section',
+  };
+
+  function handleAvenantType(select) {
+    // Masquer toutes les sous-sections
+    document.querySelectorAll('.sub-section').forEach(s => s.classList.remove('visible'));
+    const val = select.value;
+    if (val && avSections[val]) {
+      document.getElementById(avSections[val]).classList.add('visible');
+    }
+  }
+
+  // ⚠️ REMPLACER PAR TON URL MAKE WEBHOOK ici ↓
+  const MAKE_WEBHOOK_URL = 'COLLER_TON_URL_MAKE_ICI';
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  }
+
+  async function soumettre() {
+    if (!document.getElementById('consent-cb').checked) {
+      alert('Veuillez cocher la case de consentement avant de soumettre.');
+      return;
+    }
+
+    // Construire le payload selon le type de formulaire
+    let payload = {
+      type: typeActif,
+      soumisLe: new Date().toLocaleString('fr-CA', { timeZone: 'America/Montreal' }),
+    };
+
+    if (typeActif === 'auto') {
+      payload = {
+        ...payload,
+        // Informations personnelles
+        prenom: val('auto-prenom'),
+        nom: val('auto-nom'),
+        dateNaissance: val('auto-ddn'),
+        telephone: val('auto-tel'),
+        courriel: val('auto-email'),
+        adresse: val('auto-adresse'),
+        emploi: val('auto-emploi'),
+        employeur: val('auto-employeur'),
+        // Assurance actuelle
+        assureurAnt: val('auto-assureur-ant'),
+        policeAnt: val('auto-police-ant'),
+        dateExpiration: val('auto-exp'),
+        dateEffet: val('auto-date-eff'),
+        // Véhicule
+        vehAnnee: val('auto-veh-annee'),
+        vehMarque: val('auto-veh-marque'),
+        vehModele: val('auto-veh-modele'),
+        plaque: val('auto-plaque'),
+        vin: val('auto-vin'),
+        titulaire: val('auto-titulaire'),
+        financement: val('auto-financement'),
+        adresseCreancier: val('auto-adresse-creancier'),
+        tauxInteret: val('auto-taux'),
+        modifie: val('auto-modifie'),
+        usageHorsQc: val('auto-hors-qc'),
+        protections: val('auto-protections'),
+        valeurNeuf: val('auto-valeur-neuf'),
+        // Déclarations
+        consentementCredit: document.querySelector('#di-credit .oui.active') ? 'Oui' : 'Non',
+        fcsa: document.querySelector('#di-fcsa .oui.active') ? 'Oui' : 'Non',
+        faillite: document.querySelector('#di-faillite .oui.active') ? 'Oui' : 'Non',
+        annuleRefuse: document.querySelector('#di-annule .oui.active') ? 'Oui' : 'Non',
+        dossierCriminel: document.querySelector('#di-criminel .oui.active') ? 'Oui' : 'Non',
+        notes: val('auto-notes'),
+      };
+    } else if (typeActif === 'hab') {
+      const form = document.getElementById('form-hab');
+      const inputs = form.querySelectorAll('input, select, textarea');
+      payload.donnees = {};
+      inputs.forEach((el, i) => { if (el.value) payload.donnees['champ_' + i] = el.value; });
+      // Déclarations hab
+      payload.consentementCredit = document.querySelector('#hdi-credit .oui.active') ? 'Oui' : 'Non';
+      payload.fcsa = document.querySelector('#hdi-fcsa .oui.active') ? 'Oui' : 'Non';
+      payload.faillite = document.querySelector('#hdi-faillite .oui.active') ? 'Oui' : 'Non';
+      payload.annuleRefuse = document.querySelector('#hdi-annule .oui.active') ? 'Oui' : 'Non';
+    } else if (typeActif === 'avenant') {
+      const form = document.getElementById('form-avenant');
+      const inputs = form.querySelectorAll('input, select, textarea');
+      payload.donnees = {};
+      inputs.forEach((el, i) => { if (el.value) payload.donnees['champ_' + i] = el.value; });
+      payload.typeModification = val('av-type-select');
+    }
+
+    // Afficher état "envoi en cours"
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span>Envoi en cours...</span>';
+
+    try {
+      await fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors' // Make accepte cross-origin
+      });
+
+      // Succès
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('consent-submit').style.display = 'none';
+      ['auto','hab','avenant'].forEach(t => document.getElementById('form-'+t).classList.remove('visible'));
+      document.querySelector('.type-selector').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Soumettre mon formulaire</span><span>→</span>';
+      alert('Une erreur est survenue. Veuillez réessayer ou contacter Topaze Assurances directement.');
+    }
+  }
+</script>
+</body>
 </html>
